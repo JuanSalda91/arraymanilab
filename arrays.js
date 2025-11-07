@@ -55,3 +55,38 @@ console.log(filterItems("mi")); //--- ["milk", "Milk"]
 removeLastItem();
 displayList();
 
+//--- Function to update displayed list on page
+    function updateDisplay() {
+      const listElement = document.getElementById('shoppingListDisplay');
+      listElement.innerHTML = ''; // Clear existing list items
+
+      for (let i = 0; i < shoppingList.length; i++) {
+        const li = document.createElement('li');
+        li.textContent = shoppingList[i];
+        listElement.appendChild(li);
+      }
+    }
+
+    //--- Add click event for Add Item button
+    document.getElementById('addItemBtn').addEventListener('click', () => {
+      const input = document.getElementById('itemInput');
+      const item = input.value.trim();
+      if (item) {
+        addItem(item);     // existing function in arrays.js
+        updateDisplay();   // update the UI list
+        input.value = '';  // clear input box
+        input.focus();
+      }
+    });
+
+    //--- Add click event for Remove Last Item button
+    document.getElementById('removeLastItemBtn').addEventListener('click', () => {
+      removeLastItem();   // existing function in arrays.js
+      updateDisplay();    // update the UI list
+    });
+
+    //--- Initial display update on page load
+    document.addEventListener('DOMContentLoaded', () => {
+      updateDisplay();
+    });
+
