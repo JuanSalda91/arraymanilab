@@ -1,59 +1,57 @@
-let shoppingList = ["milk", "fruits", "vegetables", "ice cream", "butter", "coffee", "sugar", "salt"];
+let shoppingList = [];
 
-// --- Function to add an item to shoppingList (commented out)
-/*
-function addItem(item) {
-  shoppingList.push(item);
-  console.log(`"${item}" has been added to your shopping list.`);
-}
-*/
+// --- Step 2: Write a function called addItem that takes an item and adds it to shoppingList
+// function addItem(item) {
+//   shoppingList.push(item); // push() adds the item to the end of the array
+// }
 
-// --- Updated addItem: only add if item is not already in the list
+// --- Modify addItem to only add if item is NOT already in the list
 function addItem(item) {
-  // Convert both the item and all list items to lowercase for case-insensitive comparison
-  const lowerCaseItem = item.toLowerCase();
-  const lowerCaseList = shoppingList.map(item => item.toLowerCase());
-  if (!lowerCaseList.includes(lowerCaseItem)) {
+  // Check if item already exists in shoppingList (case sensitive)
+  if (!shoppingList.includes(item)) {
     shoppingList.push(item);
-    console.log(`"${item}" has been added to your shopping list.`);
   } else {
-    console.log(`"${item}" is already in your shopping list.`);
+    console.log(item + " is already in the list.");
   }
 }
 
-// --- Function to filter and search items by a search term (case-insensitive)
+// --- Write filterItems function that returns the items containing a search term (case-insensitive)
 function filterItems(searchTerm) {
-  const lowerCaseSearch = searchTerm.toLowerCase();
-  const filteredItems = shoppingList.filter(item => item.toLowerCase().includes(lowerCaseSearch));
-  return filteredItems;
+  let filtered = [];
+  let lowerSearchTerm = searchTerm.toLowerCase(); // --- Make search term lowercase so search is case-insensitive
+
+  for (let i = 0; i < shoppingList.length; i++) {
+    let item = shoppingList[i].toLowerCase(); // --- Convert item to lowercase
+    if (item.includes(lowerSearchTerm)) {
+      filtered.push(shoppingList[i]); // --- Add original item (not lowercase) to filtered array
+    }
+  }
+
+  return filtered;
 }
 
-// --- Function to remove the last item from shoppingList
+// --- Step 3: Write a function called removeLastItem that removes the last item from shoppingList
 function removeLastItem() {
-  if (shoppingList.length === 0) {
-    console.log("The shopping list is already empty.");
-    return;
-  }
-  let removedItem = shoppingList.pop();
-  console.log(`"${removedItem}" has been removed from your shopping list.`);
+  shoppingList.pop(); // --- pop() removes the last item from the array
 }
 
-// --- Function to display all items in shoppingList
+// --- Step 4: Write a function called displayList that logs all the items in shoppingList
 function displayList() {
-  if (shoppingList.length === 0) {
-    console.log("Your shopping list is empty.");
-  } else {
-    console.log("Shopping list items:");
-    shoppingList.forEach((item, index) => {
-      console.log(`${index + 1}. ${item}`);
-    });
+  console.log("Shopping List:");
+  // --- Loop through each item and log it
+  for (let i = 0; i < shoppingList.length; i++) {
+    console.log(shoppingList[i]);
   }
 }
 
-// Example usage:
+addItem("milk");
+addItem("fruits");
+addItem("Milk"); //--- Different case, allowed in this implementation
+
 displayList();
-addItem("eggs");
-addItem("milk"); // Should not be added again
+
+
+console.log(filterItems("mi")); //--- ["milk", "Milk"]
 removeLastItem();
 displayList();
-console.log("Items containing 'ice':", filterItems("ice")); // Should return ["ice cream"]
+
